@@ -4,6 +4,11 @@
     <configurations>
       <configuration name="Jiaotong" pure-as="true" main-class="Jiaotong" output-file="Jiaotong.swf" output-folder="$MODULE_DIR$/../out/production/Jiaotong">
         <dependencies target-player="10">
+          <entries>
+            <entry library-id="38b4d1bc-43a7-4773-a875-1c0b7a505d7e">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
           <sdk name="flex_sdk_3.6a" />
         </dependencies>
         <compiler-options />
@@ -21,6 +26,16 @@
     </content>
     <orderEntry type="jdk" jdkName="flex_sdk_3.6a" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="38b4d1bc-43a7-4773-a875-1c0b7a505d7e" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/game3.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 
