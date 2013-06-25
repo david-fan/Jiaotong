@@ -20,6 +20,8 @@ import game3.start;
 
 public class Game3 extends Sprite {
     private var s:start;
+    private var g:game;
+    private var r:end;
 
     public function Game3() {
         super();
@@ -30,9 +32,37 @@ public class Game3 extends Sprite {
 
     private function onStart(e:MouseEvent):void {
         removeChild(s);
-        var g:game = new game3.game();
+        g = new game3.game();
         addChild(g);
+        g.person1.addEventListener(MouseEvent.CLICK, onClick);
+        g.person2.addEventListener(MouseEvent.CLICK, onClick);
+        g.endBtn.addEventListener(MouseEvent.CLICK, onSubmit);
         // var e:end;
+    }
+
+    private function onSubmit(e:MouseEvent):void {
+        var ps:Boolean = checkSelected(g.person1) && checkSelected(g.person2);
+        if (ps) {
+            g.resultRight.visible = true;
+        } else {
+            g.resultWrong.visible = true;
+        }
+    }
+
+    private function checkSelected(e:DisplayObject):Boolean {
+        return e.filters != null;
+    }
+
+    private function onClick(e:MouseEvent):void {
+        if (e.target == g.person1) {
+            if (g.person1.filters != null) {
+
+            } else {
+
+            }
+        } else if (e.target == g.person2) {
+
+        }
     }
 }
 }
