@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 package {
+import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
@@ -17,8 +18,15 @@ public class JiaotongMain extends Sprite {
         stage.align = StageAlign.TOP_LEFT;
         stage.scaleMode = StageScaleMode.NO_SCALE;
 
-        var g3:Game3 = new Game3();
-        addChild(g3);
+        var games:Array=[Game1,Game2,Game3,Game5];
+        var g:Class=games[Math.floor(games.length*Math.random())];
+        showGame(g);
+    }
+
+    private function showGame(gc:Class):void{
+        trace(gc);
+        var g1:Object = new gc();
+        addChild(g1 as DisplayObject);
     }
 }
 }

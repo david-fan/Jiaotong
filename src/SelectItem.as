@@ -6,8 +6,16 @@
  * To change this template use File | Settings | File Templates.
  */
 package {
+import flash.display.DisplayObject;
+
 public class SelectItem {
-    public function SelectItem() {
+    public var mc:DisplayObject;
+    public var right:Boolean;
+
+
+    public function SelectItem(mc:DisplayObject, right:Boolean) {
+        this.mc = mc;
+        this.right = right;
     }
 }
 }

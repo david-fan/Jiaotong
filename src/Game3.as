@@ -6,11 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 package {
-import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
-import flash.events.MouseEvent;
 
 import game3.end;
 
@@ -21,48 +19,27 @@ import game3.start;
 public class Game3 extends Sprite {
     private var s:start;
     private var g:game;
-    private var r:end;
+    private var e:end;
+
+    private var _gl:GameLogical;
 
     public function Game3() {
         super();
-        s = new game3.start();
-        addChild(s);
-        s.startBtn.addEventListener(MouseEvent.CLICK, onStart);
-    }
 
-    private function onStart(e:MouseEvent):void {
-        removeChild(s);
-        g = new game3.game();
-        addChild(g);
-        g.person1.addEventListener(MouseEvent.CLICK, onClick);
-        g.person2.addEventListener(MouseEvent.CLICK, onClick);
-        g.endBtn.addEventListener(MouseEvent.CLICK, onSubmit);
-        // var e:end;
-    }
+        s = new start();
+        g = new game();
+        e = new end();
 
-    private function onSubmit(e:MouseEvent):void {
-        var ps:Boolean = checkSelected(g.person1) && checkSelected(g.person2);
-        if (ps) {
-            g.resultRight.visible = true;
-        } else {
-            g.resultWrong.visible = true;
-        }
-    }
-
-    private function checkSelected(e:DisplayObject):Boolean {
-        return e.filters != null;
-    }
-
-    private function onClick(e:MouseEvent):void {
-        if (e.target == g.person1) {
-            if (g.person1.filters != null) {
-
-            } else {
-
-            }
-        } else if (e.target == g.person2) {
-
-        }
+        _gl = new GameLogical(this);
+        _gl.setMC(s, g, e);
+        _gl.setBtns(s.startBtn, g.endBtn, e.endBtn, g.resultRight, g.resultWrong);
+        var items:Array = new Array();
+        items.push(new SelectItem(g.person1, true));
+        items.push(new SelectItem(g.person2, true));
+        items.push(new SelectItem(g.person3, false));
+        items.push(new SelectItem(g.person4, false));
+        items.push(new SelectItem(g.person5, true));
+        _gl.setSelecteds(items);
     }
 }
 }
