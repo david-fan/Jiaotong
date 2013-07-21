@@ -11,6 +11,8 @@ import flash.display.Sprite;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 
+import games.*;
+
 [SWF(width="1024", height="768")]
 public class JiaotongMain extends Sprite {
     public function JiaotongMain() {
@@ -18,8 +20,9 @@ public class JiaotongMain extends Sprite {
         stage.align = StageAlign.TOP_LEFT;
         stage.scaleMode = StageScaleMode.NO_SCALE;
 
-        var games:Array=[Game1,Game2,Game3,Game5];
-        var g:Class=games[Math.floor(games.length*Math.random())];
+//        var games:Array=[Game1,Game2,Game3,Game5];
+        var gs:Array=[Game26];
+        var g:Class=gs[Math.floor(gs.length*Math.random())];
         showGame(g);
     }
 

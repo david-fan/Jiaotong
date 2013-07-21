@@ -122,7 +122,7 @@ public class GameLogical {
 
     private function onItemClick(e:MouseEvent):void {
         var glowFilter:BitmapFilter = getBitmapFilter();
-        var item:DisplayObject = e.target as DisplayObject;
+        var item:DisplayObject = e.currentTarget as DisplayObject;
         if (item.filters.length == 0)
             item.filters = [glowFilter];
         else
