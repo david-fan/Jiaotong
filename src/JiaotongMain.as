@@ -20,13 +20,13 @@ public class JiaotongMain extends Sprite {
         stage.align = StageAlign.TOP_LEFT;
         stage.scaleMode = StageScaleMode.NO_SCALE;
 
-//        var games:Array=[Game1,Game2,Game3,Game5];
-        var gs:Array=[Game26];
-        var g:Class=gs[Math.floor(gs.length*Math.random())];
+        var gs:Array = [Game1, Game2, Game3, Game5, Game9, Game11, Game12, Game13, Game15, Game18, Game25, Game26, Game27, Game28, Game29, Game30];
+//        var gs:Array=[Game26];
+        var g:Class = gs[Math.floor(gs.length * Math.random())];
         showGame(g);
     }
 
-    private function showGame(gc:Class):void{
+    private function showGame(gc:Class):void {
         trace(gc);
         var g1:Object = new gc();
         addChild(g1 as DisplayObject);
