@@ -23,6 +23,9 @@ public class Game33 extends Sprite {
     private var g:game;
     private var e:end;
 
+    private var _w:DisplayObject;
+    private var _r:DisplayObject;
+
     public function Game33() {
         super();
 
@@ -31,28 +34,55 @@ public class Game33 extends Sprite {
         e = new end();
 
         addChild(s);
-        var self:Game33 = this;
-        s.startBtn.addEventListener(MouseEvent.CLICK, function (e:MouseEvent):void {
-            self.addChild(g);
-            setSelecteds(g.leftDoor);
-            setSelecteds(g.rightDoor);
-            g.resultRight.visible = g.resultWrong.visible = false;
-            g.submitBtn.addEventListener(MouseEvent.CLICK, onSubmit);
-        });
+        s.startBtn.addEventListener(MouseEvent.CLICK, onStart);
+    }
+
+    private function onStart(e:MouseEvent):void {
+        addChild(g);
+        g.gotoAndStop(1);
+        setSelecteds(g.leftDoor);
+        setSelecteds(g.rightDoor);
+        _w = g.resultWrong;
+        _r = g.resultRight;
+        _r.visible = _w.visible = false;
+        g.submitBtn.addEventListener(MouseEvent.CLICK, onSubmit);
     }
 
     private function onSubmit(e:MouseEvent):void {
-        if (g.leftDoor.filters.length == 1) {
-            g.resultWrong.visible = true;
-            g.resultRight.visible = false;
-            setTimeout(function ():void {
-                g.resultWrong.visible = false;
-            }, 1 * 1000);
-        } else if (g.rightDoor.filters.length == 1) {
-            g.resultWrong.visible = false;
-            g.resultRight.visible = true;
+        if (g.currentFrame == 1) {
+            if (g.leftDoor.filters.length == 1) {
+                _w.visible = true;
+                _r.visible = false;
+                setTimeout(function ():void {
+                    _w.visible = false;
+                }, 1 * 1000);
+            } else if (g.rightDoor.filters.length == 1) {
+                _w.visible = false;
+                _r.visible = true;
 
-            setTimeout(showEnd, 3 * 1000);
+                setTimeout(function ():void {
+
+                    g.gotoAndStop(2);
+                    setSelecteds(g.behind);
+                    setSelecteds(g.front);
+
+                    _w.visible = false;
+                    _r.visible = false;
+                }, 1 * 1000);
+            }
+        } else {
+            if (g.front.filters.length == 1) {
+                _w.visible = true;
+                _r.visible = false;
+                setTimeout(function ():void {
+                    _w.visible = false;
+                }, 1 * 1000);
+            } else if (g.behind.filters.length == 1) {
+                _w.visible = false;
+                _r.visible = true;
+
+                setTimeout(showEnd, 3 * 1000);
+            }
         }
     }
 

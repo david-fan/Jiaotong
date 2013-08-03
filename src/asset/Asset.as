@@ -21,6 +21,7 @@ public class Asset {
     public static var textureback:Class;
     [Embed(source="/asset/texturewood.png")]
     public static var texturewood:Class;
+
     public function Asset() {
     }
 }

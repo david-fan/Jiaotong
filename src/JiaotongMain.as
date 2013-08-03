@@ -10,6 +10,8 @@ import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
+import flash.media.Sound;
+import flash.net.URLRequest;
 
 import games.*;
 
@@ -20,10 +22,17 @@ public class JiaotongMain extends Sprite {
         stage.align = StageAlign.TOP_LEFT;
         stage.scaleMode = StageScaleMode.NO_SCALE;
 
-//        var gs:Array = [Game1, Game2, Game3, Game5, Game9, Game11, Game12, Game13, Game15, Game18, Game25, Game26, Game27, Game28, Game29, Game30];
-        var gs:Array=[FlvGame2];
+//        var gs:Array = [Game1, Game2, Game3, Game5, Game9, Game11,
+//            Game12, Game13, Game15, Game18, Game25, Game26, Game27,
+//            Game28, Game29, Game30,Game31,Game32,Game33,Game34,Game35,
+//              Game36,FlvGame1,FlvGame2];
+        var gs:Array = [Game30];
         var g:Class = gs[Math.floor(gs.length * Math.random())];
         showGame(g);
+
+        var u:String = "/asset/" + (Math.floor(Math.random() * 3) + 1) + ".mp3";
+        var s:Sound = new Sound(new URLRequest(u));
+        s.play(0, 999);
     }
 
     private function showGame(gc:Class):void {

@@ -30,7 +30,7 @@ public class Game1 extends Sprite {
         _gl.setMC(s, g, e);
         _gl.setBtns(s.startBtn, g.endBtn, e.endBtn, g.resultRight, g.resultWrong);
         var items:Array = new Array();
-        items.push(new SelectItem(g.person1, false));
+        items.push(new SelectItem(g.person1, true));
         items.push(new SelectItem(g.person2, true));
         items.push(new SelectItem(g.person3, false));
         items.push(new SelectItem(g.person4, false));
