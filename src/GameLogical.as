@@ -14,6 +14,8 @@ import flash.filters.BitmapFilter;
 import flash.filters.BitmapFilterQuality;
 import flash.filters.DropShadowFilter;
 import flash.filters.GlowFilter;
+import flash.media.Sound;
+import flash.net.URLRequest;
 import flash.utils.setTimeout;
 
 public class GameLogical {
@@ -69,10 +71,16 @@ public class GameLogical {
             }
         }
 
-        if (r)
+        if (r){
             _resultRight.visible = true;
-        else
+            var s:Sound=new Sound(new URLRequest("asset/r.mp3"));
+            s.play();
+        }
+        else{
             _resultWrong.visible = true;
+            var s:Sound=new Sound(new URLRequest("asset/w.mp3"));
+            s.play();
+        }
 
         setTimeout(checkEnd, 3 * 1000, r);
     }

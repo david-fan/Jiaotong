@@ -26,7 +26,7 @@ public class JiaotongMain extends Sprite {
 //            Game12, Game13, Game15, Game18, Game25, Game26, Game27,
 //            Game28, Game29, Game30,Game31,Game32,Game33,Game34,Game35,
 //              Game36,FlvGame1,FlvGame2];
-        var gs:Array = [FG2];
+        var gs:Array = [Game29];
         var g:Class = gs[Math.floor(gs.length * Math.random())];
         showGame(g);
 
