@@ -27,6 +27,7 @@ public class Game29 extends Sprite {
     private var ds:Array = [];
 
     private var _current:MovieClip;
+    private var _currentItem:Object;
 
     //TODO:拖动分类
     public function Game29() {
@@ -60,15 +61,15 @@ public class Game29 extends Sprite {
     }
 
     private function clickUserHandler(evt:ListEvent) {
-        var g:TileList= e.target as TileList;
-        var item:Object= e.item;
-        g.dataProvider.removeItem(item);
+        var g:TileList = e.target as TileList;
+        _currentItem = e.item;
+        g.dataProvider.removeItem(_currentItem);
 
-        var dis:MovieClip = item.source;
-        g.addChild(dis);
-        dis.x=g.mouseX;
-        dis.y=g.mouseY;
-        dis.startDrag();
+        _current = _currentItem.source;
+        g.addChild(_current);
+//        _current.x = g.mouseX;
+//        _current.y = g.mouseY;
+//        _current.startDrag();
 //        var selectedUser:Object = evt.target.getItemAt(evt.rowIndex).data;
     }
 
@@ -83,19 +84,23 @@ public class Game29 extends Sprite {
     }
 
     private function test(e:Event):void {
-        if (_current.hitTestObject(g.group1)) {
+        if (_current.hitTestObject(g.group1) && _currentItem != g.group1) {
 //            g.group1.addChild(_current);
-            g.group1.dataProvider.addItem({source: _current,from: g.group1});
+            g.group1.dataProvider.addItem({source: _current, from: g.group1});
             onMouseUp(null);
-        } else if (_current.hitTestObject(g.group2)) {
+        } else if (_current.hitTestObject(g.group2) && _currentItem != g.group2) {
 //            g.group2.addChild(_current);
-            g.group2.dataProvider.addItem({source: _current,from: g.group2});
+            g.group2.dataProvider.addItem({source: _current, from: g.group2});
             onMouseUp(null);
-        } else if (_current.hitTestObject(g.group3)) {
+        } else if (_current.hitTestObject(g.group3) && _currentItem != g.group3) {
 //            g.group3.addChild(_current);
-            g.group3.dataProvider.addItem({source: _current,from: g.group3});
+            g.group3.dataProvider.addItem({source: _current, from: g.group3});
             onMouseUp(null);
         }
+    }
+
+    private function checkItem(mc:MovieClip):void {
+
     }
 
     private function onMouseDown(e:MouseEvent):void {
