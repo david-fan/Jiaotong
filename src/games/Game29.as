@@ -24,10 +24,8 @@ public class Game29 extends Sprite {
     private var g:game;
     private var e:end;
 
-    private var ds:Array = [];
-
     private var _current:MovieClip;
-    private var _currentItem:Object;
+    private var _from:TileList;
 
     //TODO:拖动分类
     public function Game29() {
@@ -48,29 +46,27 @@ public class Game29 extends Sprite {
         for (var i:int = 0; i < ls.length; i++) {
             updateLogo(ls[i]);
         }
-        setupgGroup(g.group1);
-        setupgGroup(g.group2);
-        setupgGroup(g.group3);
+        setupGroup(g.group1);
+        setupGroup(g.group2);
+        setupGroup(g.group3);
         g.resultWrong.visible = g.resultRight.visible = false;
         g.submitBtn.addEventListener(MouseEvent.CLICK, onSubmit);
     }
 
-    private function setupgGroup(g:TileList):void {
+    private function setupGroup(g:TileList):void {
         g.addEventListener(ListEvent.ITEM_CLICK, clickUserHandler);
-
     }
 
     private function clickUserHandler(evt:ListEvent) {
-        var g:TileList = e.target as TileList;
-        _currentItem = e.item;
-        g.dataProvider.removeItem(_currentItem);
+        _from = evt.target as TileList;
+        _from.dataProvider.removeItem(evt.item);
 
-        _current = _currentItem.source;
-        g.addChild(_current);
-//        _current.x = g.mouseX;
-//        _current.y = g.mouseY;
-//        _current.startDrag();
-//        var selectedUser:Object = evt.target.getItemAt(evt.rowIndex).data;
+        _current = evt.item.source;
+        g.addChildAt(_current, g.numChildren - 1);
+        _current.x = g.mouseX - _current.width / 2;
+        _current.y = g.mouseY - _current.height / 2;
+        _current.startDrag();
+        addEventListener(Event.ENTER_FRAME, test);
     }
 
     private function onSubmit(e:MouseEvent):void {
@@ -78,39 +74,43 @@ public class Game29 extends Sprite {
     }
 
     private function updateLogo(l:MovieClip):void {
-        l.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-        l.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-        ds.push({source: l, lable: ""});
+        l.addEventListener(MouseEvent.CLICK, onLogoClick);
     }
 
     private function test(e:Event):void {
-        if (_current.hitTestObject(g.group1) && _currentItem != g.group1) {
-//            g.group1.addChild(_current);
-            g.group1.dataProvider.addItem({source: _current, from: g.group1});
-            onMouseUp(null);
-        } else if (_current.hitTestObject(g.group2) && _currentItem != g.group2) {
-//            g.group2.addChild(_current);
-            g.group2.dataProvider.addItem({source: _current, from: g.group2});
-            onMouseUp(null);
-        } else if (_current.hitTestObject(g.group3) && _currentItem != g.group3) {
-//            g.group3.addChild(_current);
-            g.group3.dataProvider.addItem({source: _current, from: g.group3});
-            onMouseUp(null);
+        if (_current.hitTestObject(g.group1)) {
+            if (_from == g.group1)
+                return;
+            g.group1.dataProvider.addItem({source: _current});
+            onMouseUp();
+        } else if (_current.hitTestObject(g.group2)) {
+            if (_from == g.group2)
+                return;
+            g.group2.dataProvider.addItem({source: _current});
+            onMouseUp();
+        } else if (_current.hitTestObject(g.group3)) {
+            if (_from == g.group3)
+                return;
+            g.group3.dataProvider.addItem({source: _current});
+            onMouseUp();
         }
     }
 
-    private function checkItem(mc:MovieClip):void {
-
+    private function onLogoClick(e:MouseEvent):void {
+        if (_current) {
+            onMouseUp();
+        } else {
+            _current = MovieClip(e.target);
+            g.addChildAt(_current, g.numChildren - 1);
+            _current.x = g.mouseX - _current.width / 2;
+            _current.y = g.mouseY - _current.height / 2;
+            _current.startDrag();
+            _from = null;
+            addEventListener(Event.ENTER_FRAME, test);
+        }
     }
 
-    private function onMouseDown(e:MouseEvent):void {
-        _current = MovieClip(e.target);
-        _current.startDrag();
-
-        addEventListener(Event.ENTER_FRAME, test);
-    }
-
-    private function onMouseUp(e:MouseEvent):void {
+    private function onMouseUp():void {
         _current.stopDrag();
         _current = null;
         removeEventListener(Event.ENTER_FRAME, test);

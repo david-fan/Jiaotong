@@ -22,11 +22,11 @@ public class JiaotongMain extends Sprite {
         stage.align = StageAlign.TOP_LEFT;
         stage.scaleMode = StageScaleMode.NO_SCALE;
 
-//        var gs:Array = [Game1, Game2, Game3, Game5, Game9, Game11,
+//        var gs:Array = [Game1, Game2, Game2a,Game3, Game5, Game9, Game11,
 //            Game12, Game13, Game15, Game18, Game25, Game26, Game27,
-//            Game28, Game29, Game30,Game31,Game32,Game33,Game34,Game35,
-//              Game36,FlvGame1,FlvGame2];
-        var gs:Array = [Game29];
+//            Game28, Game29, Game30, Game31, Game32, Game33, Game34, Game35,
+//            Game36, FlvGame1, FlvGame2, FG1, FG2];
+        var gs:Array = [FG1];
         var g:Class = gs[Math.floor(gs.length * Math.random())];
         showGame(g);
 

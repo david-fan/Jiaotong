@@ -71,14 +71,14 @@ public class GameLogical {
             }
         }
 
-        if (r){
+        if (r) {
             _resultRight.visible = true;
-            var s:Sound=new Sound(new URLRequest("asset/r.mp3"));
+            var s:Sound = new Sound(new URLRequest("asset/r.mp3"));
             s.play();
         }
-        else{
+        else {
             _resultWrong.visible = true;
-            var s:Sound=new Sound(new URLRequest("asset/w.mp3"));
+            var s:Sound = new Sound(new URLRequest("asset/w.mp3"));
             s.play();
         }
 
@@ -104,7 +104,7 @@ public class GameLogical {
         _items = items;
         for each (var o:SelectItem in _items) {
             o.mc.addEventListener(MouseEvent.CLICK, onItemClick);
-            o.mc.filters=[];
+            o.mc.filters = [];
         }
     }
 

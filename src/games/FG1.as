@@ -21,9 +21,9 @@ import flash.utils.setTimeout;
 
 public class FG1 extends Sprite {
     private var g:game;
+    private var des:Array = [];
 
     public function FG1() {
-
         super();
         g = new game();
         addChild(g);
@@ -41,10 +41,25 @@ public class FG1 extends Sprite {
         setSelecteds(g.a3.i2);
         setSelecteds(g.a4.i1);
         setSelecteds(g.a4.i2);
+
+        des.push({mc: g.a1, w: "过马路之前，在人行道上你要看清来往车辆。", r: "这个同学已经停止在过马路最安全的地方吗？"});
+        des.push({mc: g.a2, w: "过马路前要环顾四周，因为任何方向都可能有车辆驶来。", r: "过马路的时候，你应该怎样查看路面的情况？"});
+        des.push({mc: g.a3, w: "过马路时，不要和人聊天、听音乐或接打电话。", r: "看看谁准备好安全过马路了？"});
+        des.push({mc: g.a4, w: "过马路时应抓紧时间，不玩耍打闹或者快跑。", r: "过马路时，怎样做是安全的？"});
+
+        g.panel.title.text = getCurrentDes().r;
+    }
+
+    private function getCurrentDes():Object {
+        for each(var item:Object in des) {
+            if (item.mc.visible) {
+                return item;
+            }
+        }
+        return null;
     }
 
     private function showWrong():void {
-
         g.resultWrong.visible = true;
         setTimeout(function ():void {
             g.resultWrong.visible = false;
@@ -55,36 +70,43 @@ public class FG1 extends Sprite {
         if (g.a1.visible) {
             if (c(g.a1.i1) && !c(g.a1.i2)) {
                 g.resultRight.visible = true;
+                g.panel.title.text = getCurrentDes().w;
                 setTimeout(function ():void {
                     g.resultRight.visible = false;
                     g.a1.visible = false;
                     g.a2.visible = true;
+                    g.panel.title.text = getCurrentDes().r;
                 }, 1000);
             } else
                 showWrong();
         } else if (g.a2.visible) {
             if (c(g.a2.i1) && !c(g.a2.i2)) {
                 g.resultRight.visible = true;
+                g.panel.title.text = getCurrentDes().w;
                 setTimeout(function ():void {
                     g.resultRight.visible = false;
                     g.a2.visible = false;
                     g.a3.visible = true;
+                    g.panel.title.text = getCurrentDes().r;
                 }, 1000);
             } else
                 showWrong();
         } else if (g.a3.visible) {
             if (!c(g.a3.i1) && c(g.a3.i2)) {
                 g.resultRight.visible = true;
+                g.panel.title.text = getCurrentDes().w;
                 setTimeout(function ():void {
                     g.resultRight.visible = false;
                     g.a3.visible = false;
                     g.a4.visible = true;
+                    g.panel.title.text = getCurrentDes().r;
                 }, 1000);
             } else
                 showWrong();
         } else if (g.a4.visible) {
             if (!c(g.a4.i1) && c(g.a4.i2)) {
                 g.resultRight.visible = true;
+                g.panel.title.text = getCurrentDes().w;
                 setTimeout(function ():void {
                     g.resultRight.visible = false;
                     NativeApplication.nativeApplication.exit();

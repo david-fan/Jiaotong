@@ -31,12 +31,13 @@ public class FG2 extends Sprite {
         super();
         g = new game();
         addChild(g);
-        shows.push({mc: g.a1, des: "a1"});
-        shows.push({mc: g.a2, des: "a2"});
-        shows.push({mc: g.a3, des: "a3"});
-        shows.push({mc: g.a4, des: "a4"});
-        shows.push({mc: g.a5, des: "a5"});
-        g.a1.visible = g.a2.visible = g.a3.visible = g.a4.visible = g.a5.visible = false;
+        shows.push({mc: g.a1, des: "在夜间骑乘自行车，应检查白色前灯，红色后灯或者红色反射器。并清洁灯的表面，确保可以正常使用"});
+        shows.push({mc: g.a2, des: "每次骑乘自行车之前，应检查刹车功能是否正常。"});
+        shows.push({mc: g.a3, des: "每次骑乘自行车之前，要检查轮胎的气压是否充足。"});
+        shows.push({mc: g.a4, des: "骑车前应调整座椅的高度，确保脚趾可以舒适的接触到地面，不要骑乘太大或太小的自行车。"});
+        shows.push({mc: g.a5, des: "在夜间骑乘自行车，应检查车轮上的反射器，确保表面清洁。"});
+        shows.push({mc: g.a6, des: "骑车前，应检查车铃是否正常"});
+        g.a1.visible = g.a2.visible = g.a3.visible = g.a4.visible = g.a5.visible = g.a6.visible= false;
 
         g.endBtn.addEventListener(MouseEvent.CLICK, showCurrent);
         showCurrent(null);
@@ -55,7 +56,7 @@ public class FG2 extends Sprite {
         current.mc.visible = true;
         current.mc.alpha = 0;
         current.mc.scaleX = current.mc.scaleY = 0;
-        g.panel.title.text=current.des;
+        g.panel.title.text = current.des;
         TweenLite.to(current.mc, 0.5, {scaleX: 1, scaleY: 1, alpha: 1});
         currentIndex++;
     }
