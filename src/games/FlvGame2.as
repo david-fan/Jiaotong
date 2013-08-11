@@ -61,7 +61,7 @@ public class FlvGame2 extends Sprite {
         listener.onMetaData = function (evt:Object):void {
         };
         ns.client = listener;
-
+trace(file);
         ns.play("flvs/" + file);
         ns.pause();
         var container:Sprite = new Sprite();
@@ -72,6 +72,7 @@ public class FlvGame2 extends Sprite {
         container.addChild(vid);
         container.addEventListener(MouseEvent.ROLL_OVER, function (e:MouseEvent):void {
             ns.play("flvs/" + file);
+//            ns.togglePause();
         });
         container.addEventListener(MouseEvent.ROLL_OUT, function (e:MouseEvent):void {
             ns.pause();
@@ -102,10 +103,10 @@ public class FlvGame2 extends Sprite {
 
     public function setSelecteds(mc:Sprite):void {
         mc.addEventListener(MouseEvent.CLICK, function (e:MouseEvent):void {
-            if(mc.filters.length==0){
+            if (mc.filters.length == 0) {
                 var glowFilter:BitmapFilter = getBitmapFilter();
                 mc.filters = [glowFilter];
-            }else{
+            } else {
                 mc.filters = [];
             }
 

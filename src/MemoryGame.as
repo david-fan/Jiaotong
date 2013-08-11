@@ -20,15 +20,8 @@ import flash.events.TimerEvent;
 import flash.geom.Vector3D;
 import flash.utils.Timer;
 
-public class Jiaotong extends Sprite {
-    public function Jiaotong() {
-        initAway3D();
-        createGround();
-        initCards();
-        randomizeCards();
-        addCardsToScene();
-        startToRender();
-    }
+public class MemoryGame extends Sprite {
+
 
     var scene:Scene3D;
     var camera:Camera3D;
@@ -51,10 +44,21 @@ public class Jiaotong extends Sprite {
     var selectedCard2:Plane;
     var disableMouseEvents:Boolean = false;
 
-    function initAway3D():void {
-        stage.align = StageAlign.TOP_LEFT;
-        stage.scaleMode = StageScaleMode.NO_SCALE;
+    function MemoryGame():void {
 
+//        stage.align = StageAlign.TOP_LEFT;
+//        stage.scaleMode = StageScaleMode.NO_SCALE;
+
+        if(stage){
+            onAddToStage(null);
+        }
+        else{
+            addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
+        }
+
+    }
+
+    function onAddToStage(e:Event):void{
         scene = new Scene3D();
 
         camera = new Camera3D();
@@ -66,6 +70,12 @@ public class Jiaotong extends Sprite {
         view.x = stage.stageWidth / 2;
         view.y = stage.stageHeight / 2;
         addChild(view);
+
+        createGround();
+        initCards();
+        randomizeCards();
+        addCardsToScene();
+        startToRender();
     }
 
     function createGround():void {

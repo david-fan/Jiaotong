@@ -16,7 +16,6 @@ public class Game35 extends Sprite {
     private var s:start;
     private var g:game;
     private var e:end;
-    private var _gl:GameLogical;
     public function Game35() {
         super();
 
@@ -27,7 +26,6 @@ public class Game35 extends Sprite {
         var self:Game35 = this;
         s.startBtn.addEventListener(MouseEvent.CLICK, function (e:MouseEvent):void {
             self.addChild(g);
-            g.resultRight.visible = g.resultWrong.visible = false;
             g.submitBtn.addEventListener(MouseEvent.CLICK, onSubmit);
         });
     }

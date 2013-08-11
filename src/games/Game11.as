@@ -63,7 +63,7 @@ public class Game11 extends Sprite {
         for each(var item:Object in pairs) {
 //            item.order.x = item.mc.x;
 //            item.order.y = item.mc.y;
-            TweenLite.to(item.order, 0.5, {x: item.mc.x, y: item.mc.y-100});
+            TweenLite.to(item.order, 0.5, {x: item.mc.x, y: item.mc.y- 100});
         }
     }
 
@@ -86,10 +86,12 @@ public class Game11 extends Sprite {
     }
 
     private function onSubmit(e:MouseEvent):void {
-        var result:Boolean = true && findByMC(g.m1) == findByOrder(g.order1);
-        result = result && findByMC(g.m2) == findByOrder(g.order2);
-        result = result && findByMC(g.m3) == findByOrder(g.order3);
-        result = result && findByMC(g.m4) == findByOrder(g.order4);
+        var result:Boolean = true;
+        result = result && findByMC(g.p1) == findByOrder(g.item1);
+        result = result && findByMC(g.p2) == findByOrder(g.item2);
+        result = result && findByMC(g.p3) == findByOrder(g.item3);
+        result = result && findByMC(g.p4) == findByOrder(g.item4);
+        result = result && findByMC(g.p5) == findByOrder(g.item5);
         if (!result) {
             g.resultWrong.visible = true;
             g.resultRight.visible = false;
@@ -137,7 +139,7 @@ public class Game11 extends Sprite {
                 item2.order = _current;
                 //_current.filters=[];
                 //_current.stopDrag();
-                TweenLite.to(item1.order, 1, {x: item1.mc.x, y: item1.mc.y-100});
+                TweenLite.to(item1.order, 1, {x: item1.mc.x, y: item1.mc.y - 100});
                 return;
             }
         }
