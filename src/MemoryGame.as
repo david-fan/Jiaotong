@@ -29,12 +29,18 @@ public class MemoryGame extends Sprite {
     var totalchildren:int = 10;
     var cards:Array;
     var textures:Array = [ new Asset.texture0(),
-        new Asset.texture1(),
         new Asset.texture2(),
+        new Asset.texture4(),
+        new Asset.texture6(),
+        new Asset.texture8()];
+    var textures2:Array = [
+        new Asset.texture1(),
         new Asset.texture3(),
-        new Asset.texture4()];
+        new Asset.texture5(),
+        new Asset.texture7(),
+        new Asset.texture9()];
     var backtexture:Bitmap = new Asset.textureback();
-    var woodtexture:Bitmap = new Asset.texturewood();
+    var woodtexture:Bitmap = new Asset.background();
     var cardwidth:Number = 110;
     var cardheight:Number = 150;
     var xoffset:Number = 10;
@@ -49,16 +55,16 @@ public class MemoryGame extends Sprite {
 //        stage.align = StageAlign.TOP_LEFT;
 //        stage.scaleMode = StageScaleMode.NO_SCALE;
 
-        if(stage){
+        if (stage) {
             onAddToStage(null);
         }
-        else{
+        else {
             addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
         }
 
     }
 
-    function onAddToStage(e:Event):void{
+    function onAddToStage(e:Event):void {
         scene = new Scene3D();
 
         camera = new Camera3D();
@@ -67,22 +73,24 @@ public class MemoryGame extends Sprite {
         camera.lookAt(new Vector3D(0, 0, 0));
 
         view = new View3D({scene: scene, camera: camera});
+        addChild(new Asset.background());
         view.x = stage.stageWidth / 2;
         view.y = stage.stageHeight / 2;
         addChild(view);
 
-        createGround();
+//        createGround();
         initCards();
         randomizeCards();
         addCardsToScene();
         startToRender();
     }
 
-    function createGround():void {
-        var cube:Cube = new Cube({width: 680, depth: 400, height: 20, pushback: true, ownCanvas: true, material: new BitmapMaterial(woodtexture.bitmapData)});
-        cube.y = -20;
-        scene.addChild(cube);
-    }
+//    function createGround():void {
+//        var cube:Plane = new Plane({width: 1024, depth: 768, height: 1024, pushback: true, ownCanvas: true, material: new BitmapMaterial(woodtexture.bitmapData)});
+//        cube.y = -20;
+//        cube.rotationY=180;
+//        scene.addChild(cube);
+//    }
 
     function createCard(texture:Bitmap, id:int):ObjectContainer3D {
         var card:ObjectContainer3D = new ObjectContainer3D();
@@ -111,7 +119,7 @@ public class MemoryGame extends Sprite {
         for (var i:int = 0; i < textures.length; i++) {
 
             var card1:ObjectContainer3D = createCard(textures[i], i);
-            var card2:ObjectContainer3D = createCard(textures[i], i);
+            var card2:ObjectContainer3D = createCard(textures2[i], i);
 
             cards.push(card1);
             cards.push(card2);

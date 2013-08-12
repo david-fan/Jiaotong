@@ -9,6 +9,8 @@ package games {
 import fl.controls.TileList;
 import fl.events.ListEvent;
 
+import flash.desktop.NativeApplication;
+
 import flash.display.DisplayObject;
 
 import flash.display.MovieClip;
@@ -16,6 +18,7 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.geom.Point;
+import flash.utils.setTimeout;
 
 import game29.*;
 
@@ -70,7 +73,36 @@ public class Game29 extends Sprite {
     }
 
     private function onSubmit(e:MouseEvent):void {
+        var g1:Boolean = checkItemInGroup([g.logo4, g.logo5, g.logo7, g.logo12], g.group1);
+        var g2:Boolean = checkItemInGroup([g.logo2, g.logo6, g.logo9, g.logo11], g.group2);
+        var g3:Boolean = checkItemInGroup([g.logo1, g.logo3, g.logo8, g.logo10], g.group3);
 
+        if (g1 && g2 && g3) {
+            showWrong();
+        }
+        g.resultRight.visible = true;
+        setTimeout(function ():void {
+            NativeApplication.nativeApplication.exit();
+        }, 1000);
+    }
+
+    private function showWrong():void {
+        g.resultWrong.visible = true;
+        setTimeout(function ():void {
+            g.resultWrong.visible = false;
+        }, 1000);
+    }
+
+    private function checkItemInGroup(objects:Array, group:TileList):Boolean {
+        if (group.dataProvider.length != 4)
+            return false;
+
+        for (var i:int = 0; i < group.dataProvider.length; i++) {
+            var item:Object = group.dataProvider.getItemAt(i);
+            if (objects.indexOf(item.source) < 0)
+                return false;
+        }
+        return true;
     }
 
     private function updateLogo(l:MovieClip):void {

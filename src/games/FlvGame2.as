@@ -17,6 +17,7 @@ import flash.filters.GlowFilter;
 import flash.media.Video;
 import flash.net.NetConnection;
 import flash.net.NetStream;
+import flash.utils.setTimeout;
 
 import flv2.*;
 
@@ -42,81 +43,56 @@ public class FlvGame2 extends Sprite {
 
         for (var i:int = 0; i < 3; i++) {
             for (var m:int = 0; m < 3; m++) {
-                var v = addVideo("0" + (i + m + 2) + ".flv");
+                var f:int = (i * 3 + m + 2);
+                var v = new VideoItem(f > 9 ? f + ".flv" : "0" + f + ".flv");
                 v.x = (220 + 10) * m + 180;
                 v.y = (128 + 10) * i + 130;
+                addChild(v);
+                vs.push(v);
             }
-
         }
+
+        addChild(game.resultRight);
+        addChild(game.resultWrong);
+        game.resultRight.visible = game.resultWrong.visible = false;
     }
 
-    private function addVideo(file:String):DisplayObject {
-        var vid:Video = new Video(220, 128);
-//        addChild(vid);
-        var nc:NetConnection = new NetConnection();
-        nc.connect(null);
-        var ns:NetStream = new NetStream(nc);
-        vid.attachNetStream(ns);
-        var listener:Object = new Object();
-        listener.onMetaData = function (evt:Object):void {
-        };
-        ns.client = listener;
-trace(file);
-        ns.play("flvs/" + file);
-        ns.pause();
-        var container:Sprite = new Sprite();
-        container.graphics.beginFill(0, 0);
-        container.graphics.drawRect(0, 0, 220, 128);
-        container.graphics.endFill();
-        addChild(container);
-        container.addChild(vid);
-        container.addEventListener(MouseEvent.ROLL_OVER, function (e:MouseEvent):void {
-            ns.play("flvs/" + file);
-//            ns.togglePause();
-        });
-        container.addEventListener(MouseEvent.ROLL_OUT, function (e:MouseEvent):void {
-            ns.pause();
-        });
-        setSelecteds(container);
-        return container;
+    private var vs:Array = [];
+
+    private function c(mc:DisplayObject):Boolean {
+        if (mc.filters.length == 1)
+            return true;
+        else
+            return false;
     }
 
-    private function getBitmapFilter():BitmapFilter {
-        var color:Number = 0x33CCFF;
-        var alpha:Number = 0.8;
-        var blurX:Number = 10;
-        var blurY:Number = 10;
-        var strength:Number = 5;
-        var inner:Boolean = false;
-        var knockout:Boolean = false;
-        var quality:Number = BitmapFilterQuality.HIGH;
-
-        return new GlowFilter(color,
-                alpha,
-                blurX,
-                blurY,
-                strength,
-                quality,
-                inner,
-                knockout);
+    private function showWrong():void {
+        game.resultWrong.visible = true;
+        setTimeout(function ():void {
+            game.resultWrong.visible = false;
+        }, 1000 * 1);
     }
 
-    public function setSelecteds(mc:Sprite):void {
-        mc.addEventListener(MouseEvent.CLICK, function (e:MouseEvent):void {
-            if (mc.filters.length == 0) {
-                var glowFilter:BitmapFilter = getBitmapFilter();
-                mc.filters = [glowFilter];
-            } else {
-                mc.filters = [];
-            }
+    private function showRight(callback:Function):void {
 
-        });
-        mc.filters = [];
-        mc.useHandCursor = true;
-        mc.buttonMode = true;
+        game.resultRight.visible = true;
+        setTimeout(function ():void {
+            game.resultRight.visible = false;
+            callback();
+        }, 1000 * 1);
     }
 
     private function onSubmit(e:MouseEvent):void {
+        for (var i:int = 0; i < vs.length; i++) {
+            if (!c(vs[i])) {
+                showWrong();
+                return;
+            }
+        }
+        showRight(showend);
+    }
+
+    private function showend():void {
         removeChild(game);
         addChild(end);
     }
