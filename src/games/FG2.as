@@ -22,13 +22,37 @@ import flash.filters.GlowFilter;
 import flash.utils.setTimeout;
 
 public class FG2 extends Sprite {
+    private var s:start;
     private var g:game;
+    private var e:end;
     private var shows:Array = [];
     private var current:Object;
     private var currentIndex:int = 0;
 
     public function FG2() {
         super();
+        s = new start();
+        addChild(s);
+        s.startBtn.addEventListener(MouseEvent.CLICK, onStart);
+    }
+
+    private function onStart(e:MouseEvent):void {
+        removeChild(s);
+        showgame();
+    }
+
+    private function showEnd():void {
+        removeChild(g);
+        e = new end();
+        addChild(e);
+        e.endBtn.addEventListener(MouseEvent.CLICK, onExit);
+    }
+
+    private function onExit(e:MouseEvent):void {
+        NativeApplication.nativeApplication.exit();
+    }
+
+    private function showgame():void {
         g = new game();
         addChild(g);
         shows.push({mc: g.a1, des: "在夜间骑乘自行车，应检查白色前灯，红色后灯或者红色反射器。并清洁灯的表面，确保可以正常使用"});
@@ -37,9 +61,9 @@ public class FG2 extends Sprite {
         shows.push({mc: g.a4, des: "骑车前应调整座椅的高度，确保脚趾可以舒适的接触到地面，不要骑乘太大或太小的自行车。"});
         shows.push({mc: g.a5, des: "在夜间骑乘自行车，应检查车轮上的反射器，确保表面清洁。"});
         shows.push({mc: g.a6, des: "骑车前，应检查车铃是否正常"});
-        g.a1.visible = g.a2.visible = g.a3.visible = g.a4.visible = g.a5.visible = g.a6.visible= false;
+        g.a1.visible = g.a2.visible = g.a3.visible = g.a4.visible = g.a5.visible = g.a6.visible = false;
 
-        g.endBtn.addEventListener(MouseEvent.CLICK, showCurrent);
+        g.submitBtn.addEventListener(MouseEvent.CLICK, showCurrent);
         showCurrent(null);
     }
 
@@ -62,7 +86,8 @@ public class FG2 extends Sprite {
     }
 
     private function exit():void {
-        NativeApplication.nativeApplication.exit();
+//        NativeApplication.nativeApplication.exit();
+        showEnd();
     }
 }
 }

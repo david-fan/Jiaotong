@@ -5,23 +5,28 @@ import away3d.cameras.*;
 import away3d.containers.*;
 import away3d.materials.*;
 import away3d.primitives.Plane;
-import away3d.primitives.Cube;
 import away3d.containers.ObjectContainer3D;
 
 import caurina.transitions.*
 
+import flash.desktop.NativeApplication;
+
 import flash.display.Bitmap;
 
 import flash.display.Sprite;
-import flash.display.StageAlign;
-import flash.display.StageScaleMode;
 import flash.events.Event;
+import flash.events.MouseEvent;
 import flash.events.TimerEvent;
 import flash.geom.Vector3D;
 import flash.utils.Timer;
 
+import mg.*;
+
 public class MemoryGame extends Sprite {
 
+    var s:start;
+    var g:game;
+    var e:end;
 
     var scene:Scene3D;
     var camera:Camera3D;
@@ -40,7 +45,7 @@ public class MemoryGame extends Sprite {
         new Asset.texture7(),
         new Asset.texture9()];
     var backtexture:Bitmap = new Asset.textureback();
-    var woodtexture:Bitmap = new Asset.background();
+//    var woodtexture:Bitmap = new Asset.background();
     var cardwidth:Number = 110;
     var cardheight:Number = 150;
     var xoffset:Number = 10;
@@ -51,20 +56,31 @@ public class MemoryGame extends Sprite {
     var disableMouseEvents:Boolean = false;
 
     function MemoryGame():void {
-
-//        stage.align = StageAlign.TOP_LEFT;
-//        stage.scaleMode = StageScaleMode.NO_SCALE;
-
-        if (stage) {
-            onAddToStage(null);
-        }
-        else {
-            addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
-        }
-
+        super();
+        s=new start();
+        addChild(s);
+        s.startBtn.addEventListener(MouseEvent.CLICK, onStart);
     }
 
-    function onAddToStage(e:Event):void {
+    private function onStart(e:MouseEvent):void{
+        removeChild(s);
+        showgame();
+    }
+
+    private function showEnd():void{
+        removeChild(g);
+        e=new end();
+        addChild(e);
+        e.endBtn.addEventListener(MouseEvent.CLICK, onExit);
+    }
+
+    private function onExit(e:MouseEvent):void{
+        NativeApplication.nativeApplication.exit();
+    }
+
+    function showgame():void {
+        g=new game();
+        addChild(g);
         scene = new Scene3D();
 
         camera = new Camera3D();
@@ -73,7 +89,7 @@ public class MemoryGame extends Sprite {
         camera.lookAt(new Vector3D(0, 0, 0));
 
         view = new View3D({scene: scene, camera: camera});
-        addChild(new Asset.background());
+//        addChild(new Asset.background());
         view.x = stage.stageWidth / 2;
         view.y = stage.stageHeight / 2;
         addChild(view);
@@ -168,6 +184,8 @@ public class MemoryGame extends Sprite {
         totalchildren--;
         if (totalchildren == 0) {
             trace("WIN");
+
+            showEnd();
         }
 
     }

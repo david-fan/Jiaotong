@@ -28,17 +28,17 @@ public class JiaotongMain extends Sprite {
         var gs:Array = [Game1, Game2a, Game3, Game5, Game9, Game11,
             Game12, Game13, Game15, Game18, Game25, Game26, Game27,
             Game28, Game29, Game30, Game31, Game32, Game33, Game34, Game35,
-            Game36, FlvGame1, FlvGame2, FG1, FG2, JTAQ, MemoryGame, NG1];
+            Game36, FlvGame1, FlvGame2, FG1, FG2, JTAQ, MemoryGame];
 //        var gs:Array = [MemoryGame];
 //        var g:Class = gs[Math.floor(gs.length * Math.random())];
 //        showGame(g);
 
-        var tl:TileList=new TileList();
-        for(var i:int=0;i<gs.length;i++){
-            tl.dataProvider.addItem({label:"游戏"+(i+1),c:gs[i]});
+        var tl:TileList = new TileList();
+        for (var i:int = 0; i < gs.length; i++) {
+            tl.dataProvider.addItem({label: "游戏" + (i + 1), c: gs[i]});
         }
-        tl.width=1024;
-        tl.height=768;
+        tl.width = 1024;
+        tl.height = 768;
         addChild(tl);
         tl.addEventListener(ListEvent.ITEM_CLICK, clickUserHandler);
     }

@@ -32,8 +32,8 @@ public class Asset {
     [Embed(source="/asset/texturewood.png")]
     public static var texturewood:Class;
 
-    [Embed(source="/asset/mgbg.jpg")]
-    public static var background:Class;
+//    [Embed(source="/asset/mgbg.jpg")]
+//    public static var background:Class;
     public function Asset() {
     }
 }
