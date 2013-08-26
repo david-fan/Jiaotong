@@ -19,8 +19,15 @@ import flash.events.MouseEvent;
 import flash.filters.BitmapFilter;
 import flash.filters.BitmapFilterQuality;
 import flash.filters.GlowFilter;
-import flash.text.TextField;
+import flash.text.engine.ElementFormat;
+import flash.text.engine.FontDescription;
+import flash.text.engine.FontLookup;
+import flash.text.engine.TextBlock;
+import flash.text.engine.TextElement;
+import flash.text.engine.TextLine;
 import flash.utils.setTimeout;
+
+import org.david.ui.MTextBlock;
 
 public class FG1 extends Sprite {
     private var s:start;
@@ -28,32 +35,41 @@ public class FG1 extends Sprite {
     private var e:end;
     private var des:Array = [];
 
+    private var txt:MyText;
+
     public function FG1() {
         super();
-        s=new start();
+        s = new start();
         addChild(s);
         s.startBtn.addEventListener(MouseEvent.CLICK, onStart);
     }
 
-    private function onStart(e:MouseEvent):void{
+    private function onStart(e:MouseEvent):void {
         removeChild(s);
         showgame();
     }
 
-    private function showEnd():void{
+    private function showEnd():void {
         removeChild(g);
-        e=new end();
+        e = new end();
         addChild(e);
         e.endBtn.addEventListener(MouseEvent.CLICK, onExit);
     }
 
-    private function onExit(e:MouseEvent):void{
+    private function onExit(e:MouseEvent):void {
         NativeApplication.nativeApplication.exit();
     }
 
-    private function showgame():void{
+    private function showgame():void {
         g = new game();
         addChild(g);
+//        txt = new MyText("", 26,0, 547);
+        txt = new MyText();
+        addChild(txt);
+        txt.filters = [new GlowFilter(0xffffff, 1, 8, 8, 600)];
+        txt.x = 285;
+        txt.y = 141;
+
         g.resultRight.visible = g.resultWrong.visible = false;
         g.a1.visible = true;
         g.a2.visible = false;
@@ -74,8 +90,9 @@ public class FG1 extends Sprite {
         des.push({mc: g.a3, w: "过马路时，不要和人聊天、听音乐或接打电话。", r: "看看谁准备好安全过马路了？"});
         des.push({mc: g.a4, w: "过马路时应抓紧时间，不玩耍打闹或者快跑。", r: "过马路时，怎样做是安全的？"});
 
-        TLFTextField(g.panel.title).textColor=0x5BC5BF;
-        g.panel.title.text = getCurrentDes().r;
+        txt.updateText(getCurrentDes().r, 26, 0x5BC5BF, 547);
+//        txt.color = 0x5BC5BF;
+//        txt.text = getCurrentDes().r;
     }
 
     private function getCurrentDes():Object {
@@ -88,12 +105,14 @@ public class FG1 extends Sprite {
     }
 
     private function showWrong():void {
-        g.panel.title.textColor=0xfd6b12;
-        g.panel.title.text = getCurrentDes().w;
+        txt.updateText(getCurrentDes().w, 26, 0xfd6b12, 547);
+//        txt.color = 0xfd6b12;
+//        txt.text = getCurrentDes().w;
         g.resultWrong.visible = true;
         setTimeout(function ():void {
-            TLFTextField(g.panel.title).textColor=0x5BC5BF;
-            g.panel.title.text = getCurrentDes().r;
+            txt.updateText(getCurrentDes().r, 26, 0x5BC5BF, 547);
+//            txt.color = 0x5BC5BF;
+//            txt.text = getCurrentDes().r;
             g.resultWrong.visible = false;
         }, 1000);
     }
@@ -107,8 +126,9 @@ public class FG1 extends Sprite {
                     g.resultRight.visible = false;
                     g.a1.visible = false;
                     g.a2.visible = true;
-                    TLFTextField(g.panel.title).textColor=0x5BC5BF;
-                    g.panel.title.text = getCurrentDes().r;
+                    txt.updateText(getCurrentDes().r, 26, 0x5BC5BF, 547);
+//                    txt.color = 0x5BC5BF;
+//                    txt.text = getCurrentDes().r;
                 }, 1000);
             } else
                 showWrong();
@@ -120,8 +140,9 @@ public class FG1 extends Sprite {
                     g.resultRight.visible = false;
                     g.a2.visible = false;
                     g.a3.visible = true;
-                    TLFTextField(g.panel.title).textColor=0x5BC5BF;
-                    g.panel.title.text = getCurrentDes().r;
+                    txt.updateText(getCurrentDes().r, 26, 0x5BC5BF, 547);
+//                    txt.color = 0x5BC5BF;
+//                    txt.text = getCurrentDes().r;
                 }, 1000);
             } else
                 showWrong();
@@ -133,8 +154,9 @@ public class FG1 extends Sprite {
                     g.resultRight.visible = false;
                     g.a3.visible = false;
                     g.a4.visible = true;
-                    TLFTextField(g.panel.title).textColor=0x5BC5BF;
-                    g.panel.title.text = getCurrentDes().r;
+                    txt.updateText(getCurrentDes().r, 26, 0x5BC5BF, 547);
+//                    txt.color = 0x5BC5BF;
+//                    txt.text = getCurrentDes().r;
                 }, 1000);
             } else
                 showWrong();

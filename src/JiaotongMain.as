@@ -18,12 +18,19 @@ import flash.net.URLRequest;
 
 import games.*;
 
+import org.david.ui.MTextBlock;
+
 [SWF(width="1024", height="768")]
 public class JiaotongMain extends Sprite {
     public function JiaotongMain() {
         super();
         stage.align = StageAlign.TOP_LEFT;
         stage.scaleMode = StageScaleMode.NO_SCALE;
+
+        var fl:FontLib=new FontLib();
+        fl.y=300;
+        addChild(fl);
+//        MTextBlock.DefaultFontName = "jyy";
 
         var gs:Array = [Game1, Game2a, Game3, Game5, Game9, Game11,
             Game12, Game13, Game15, Game18, Game25, Game26, Game27,
@@ -41,6 +48,7 @@ public class JiaotongMain extends Sprite {
         tl.height = 768;
         addChild(tl);
         tl.addEventListener(ListEvent.ITEM_CLICK, clickUserHandler);
+
     }
 
     private function clickUserHandler(evt:ListEvent) {

@@ -21,6 +21,8 @@ import flash.filters.BitmapFilterQuality;
 import flash.filters.GlowFilter;
 import flash.utils.setTimeout;
 
+import org.david.ui.MTextBlock;
+
 public class FG2 extends Sprite {
     private var s:start;
     private var g:game;
@@ -28,6 +30,8 @@ public class FG2 extends Sprite {
     private var shows:Array = [];
     private var current:Object;
     private var currentIndex:int = 0;
+
+    private var txt:MyText;
 
     public function FG2() {
         super();
@@ -55,6 +59,13 @@ public class FG2 extends Sprite {
     private function showgame():void {
         g = new game();
         addChild(g);
+        txt = new MyText();
+        addChild(txt);
+        txt.filters = [new GlowFilter(0xffffff, 1, 8, 8, 600)];
+        txt.x = g.panel.x + 50;
+        txt.y = g.panel.y;
+        g.removeChild(g.panel);
+
         shows.push({mc: g.a1, des: "在夜间骑乘自行车，应检查白色前灯，红色后灯或者红色反射器。并清洁灯的表面，确保可以正常使用"});
         shows.push({mc: g.a2, des: "每次骑乘自行车之前，应检查刹车功能是否正常。"});
         shows.push({mc: g.a3, des: "每次骑乘自行车之前，要检查轮胎的气压是否充足。"});
@@ -80,7 +91,10 @@ public class FG2 extends Sprite {
         current.mc.visible = true;
         current.mc.alpha = 0;
         current.mc.scaleX = current.mc.scaleY = 0;
-        g.panel.title.text = current.des;
+//        g.panel.title.text = current.des;
+
+
+        txt.updateText(current.des, 26, 0x5BC5BF, g.panel.width);
         TweenLite.to(current.mc, 0.5, {scaleX: 1, scaleY: 1, alpha: 1});
         currentIndex++;
     }
